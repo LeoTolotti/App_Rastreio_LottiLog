@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 export default function Login() {
   return (
     <View>
-      <Text>Esse é o componente Login do sistema</Text>
+      <Text>Esse é o componente Login do sistema da LottiLog</Text>
     </View>
   );
 }
