@@ -1,2 +1,1 @@
-"# App_de_Rastreio" 
-"# App_de_Rastreio" 
+Aplicatido de rastreio construido em Expo - React Native
