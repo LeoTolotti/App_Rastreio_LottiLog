@@ -13,6 +13,7 @@ export default function Home({ navigation }) {
           style={css.button__img}
           source={require("../assets/img/buttonLogin.png")}
         />
+        <Text>Login</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("Rastreio")}>
@@ -20,6 +21,7 @@ export default function Home({ navigation }) {
           style={css.button__img}
           source={require("../assets/img/buttonRastreio.png")}
         />
+        <Text>Rastreio</Text>
       </TouchableOpacity>
     </View>
   );
