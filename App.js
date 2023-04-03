@@ -29,7 +29,11 @@ export default function App() {
           component={Login}
         />
         <Stack.Screen name="Rastreio" component={Rastreio} />
-        <Stack.Screen name="AreaRestrita" component={AreaRestrita} />
+        <Stack.Screen
+          name="AreaRestrita"
+          options={{ headerShown: false }}
+          component={AreaRestrita}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
