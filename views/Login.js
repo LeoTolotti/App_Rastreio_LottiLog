@@ -10,6 +10,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as LocalAuthentication from "expo-local-authentication";
 import { css } from "../assets/css/Css";
+import config from "../config/config.json";
 
 export default function Login({ navigation }) {
   const [display, setDisplay] = useState("none");
@@ -57,7 +58,7 @@ export default function Login({ navigation }) {
 
   //Envio do formulário de login
   async function sendForm() {
-    let response = await fetch("http://192.168.0.105:3000/login", {
+    let response = await fetch(`${config.urlRoot}login`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -78,6 +79,8 @@ export default function Login({ navigation }) {
       await AsyncStorage.setItem("userData", JSON.stringify(json));
       navigation.navigate("AreaRestrita");
     }
+    setUser("");
+    setPassword("");
   }
   return (
     //KeyboardAvoidingView não deixa o teclado subir em cima dos componentes
@@ -96,11 +99,13 @@ export default function Login({ navigation }) {
         <TextInput
           style={css.login__input}
           placeholder="Usuário:"
+          value={user}
           onChangeText={(text) => setUser(text)}
         />
         <TextInput
           style={css.login__input}
           placeholder="Senha:"
+          value={password}
           onChangeText={(text) => setPassword(text)}
           secureTextEntry={true}
         />
