@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Tracking.belongsTo(models.User);
+      Tracking.belongsTo(models.User, { foreignKey: "userId" });
       Tracking.hasMany(models.Product);
     }
   }

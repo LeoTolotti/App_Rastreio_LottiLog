@@ -21,5 +21,6 @@
     "dialect": "mysql"
   },
   "urlRoot": "http://192.168.0.105:3000/",
-  "origin": "Av. Paulista, 200 - São Paulo / SP"
+  "origin": "Av. Paulista, 200 - São Paulo / SP",
+  "geocodingAPI": "AIzaSyC2yq12-PEO0O3onm64AmQvc5OJG8z_njM"
 }

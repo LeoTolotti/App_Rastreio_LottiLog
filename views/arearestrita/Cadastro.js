@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  Button,
+  Image,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
 import MenuAreaRestrita from "../../assets/components/MenuAreaRestrita";
 import config from "../../config/config";
 import { css } from "../../assets/css/Css";
@@ -18,7 +28,8 @@ export default function Cadastro({ navigation }) {
 
   useEffect(() => {
     randomCode();
-  }, []);
+    setProduct("");
+  }, [response]);
 
   //Pegar o id do usuário
   async function getUser() {
@@ -40,23 +51,21 @@ export default function Cadastro({ navigation }) {
 
   //Envio do formulário
   async function sendForm() {
-    let response = await fetch(
-      `${config.urlRoot}create`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user,
-          code: code,
-          product: product,
-          local: address,
-        }),
+    let response = await fetch(`${config.urlRoot}create`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      setProduct("")
-    );
+      body: JSON.stringify({
+        userId: user,
+        code: code,
+        product: product,
+        local: address,
+      }),
+    });
+    let json = await response.json();
+    setResponse(json);
   }
   const confirmForm = () =>
     Alert.alert(
@@ -79,10 +88,25 @@ export default function Cadastro({ navigation }) {
         { text: "OK", onPress: () => sendForm() },
       ]
     );
+  //Compartilhar o QRCode
+  async function shareQR() {
+    const image = config.urlRoot + "img/code.png";
+    FileSystem.downloadAsync(image, FileSystem.documentDirectory + ".png").then(
+      ({ uri }) => {
+        Sharing.shareAsync(uri);
+      }
+    );
+    await Sharing.shareAsync();
+  }
   return (
-    <View>
+    <View style={[css.container, css.containerTop]}>
       <MenuAreaRestrita title="Cadastro" navigation={navigation} />
-
+      {response && (
+        <View>
+          <Image source={{ uri: response, height: 180, width: 180 }} />
+          <Button title="Compartilhar" onPress={() => shareQR()} />
+        </View>
+      )}
       <View style={css.login__input}>
         <TextInput
           value={product}
