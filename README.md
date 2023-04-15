@@ -1,4 +1,8 @@
-App de rastreio criado com Expo - React Native.
+# Aplicativo de Rastreio - Lottilog
+
+Aplicativo desenvolvido em Expo, com funções de rastreio de encomendas.
+
+### 📋 Pré-requisitos
 
 Requisitos para criar esse app com React Native:
 1 - Noções básicas de Javascript

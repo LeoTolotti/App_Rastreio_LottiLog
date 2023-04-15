@@ -15,6 +15,7 @@ export default function Edicao({ navigation }) {
   const [code, setCode] = useState(null);
   const [product, setProduct] = useState(null);
   const [localization, setLocalization] = useState(null);
+  const [response, setResponse] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -25,7 +26,7 @@ export default function Edicao({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
       }
@@ -41,7 +42,6 @@ export default function Edicao({ navigation }) {
     await searchProduct(data);
   }
   //Procura do Produto
-
   async function searchProduct(codigo) {
     let response = await fetch(`${config.urlRoot}searchProduct`, {
       method: "POST",
@@ -79,6 +79,24 @@ export default function Edicao({ navigation }) {
       })
       .catch((error) => console.warn(error));
   }
+
+  //Envia o formulário com os dados para edição
+  async function sendForm() {
+    let response = await fetch(config.urlRoot + "update", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        code: code,
+        product: product,
+        local: localization,
+      }),
+    });
+    let json = await response.json();
+    setResponse(json);
+  }
   return (
     <View style={[css.container, css.containerTop]}>
       <MenuAreaRestrita title="Edição" navigation={navigation} />
@@ -89,6 +107,10 @@ export default function Edicao({ navigation }) {
         style={css.qr__code(displayQR)}
       />
       <View style={css.qr__form(displayForm)}>
+
+
+ 
+        <Text>{response}</Text>
         <Text>Código do Produto: {code}</Text>
 
         <View style={css.login__input}>
